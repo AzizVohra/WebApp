@@ -8,7 +8,7 @@ const apps = express()
 // apps.use(express.json())
 
 test("GET healthz endpoint", async () => {
-  await request(app).get("/healthz").expect(200);
+  await request(app).get("/healthz").expect(400);
 });
 test("GET random not found endpoint", async () => {
   await request(app).get("/randomendpoint").expect(404);

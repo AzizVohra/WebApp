@@ -17,4 +17,4 @@ When we run this application using the npm start command, it starts the server l
 
 An automated workflow is created via github actions to run the unit tests via the yml file which has jobs to create node js environment in ubuntu os. Then it installs the node application and runs all the tests. This action is triggered whenever a pull request or push to main branch is done.
 
-Also, branch protection is added in the upstream repo where unless all the workflows run successfully, it doesn't allow the Pull Request to merge to the main branch.
+Also, branch protection is added in the upstream repo where unless all the workflows run successfully, it doesn't allow the Pull Request to merge to the main branch
