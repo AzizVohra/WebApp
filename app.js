@@ -5,61 +5,61 @@ const { sequelize,User,Product} = require('./models')
 // const bcrypt = require('bcrypt');
 // const auth=require('./auth/auth')
 
-app.get('/healthz', async (req, res) => {
-  res.sendStatus(200);
-})
+// app.get('/healthz', async (req, res) => {
+//   res.sendStatus(200);
+// })
 
-///POSTING USER INFORMATION
-app.post('/v1/users', async (req, res) => {
-  const { first_name, username, last_name,password } = req.body
+// ///POSTING USER INFORMATION
+// app.post('/v1/users', async (req, res) => {
+//   const { first_name, username, last_name,password } = req.body
 
-  try {
-  //email should be valid
-   const emailRegex =/^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$/
-   if (!emailRegex.test(username)){
-    return res.status(400).json({ error: 'Enter your Email ID in correct format. Example: abc@xyz.com' })
-   }
-    // Validation for ID
-  if (req.body.id){
-    return res.status(400).json({ error: 'Invalid request body for user object: ID cannot be provided by the user' })
-  }
+//   try {
+//   //email should be valid
+//    const emailRegex =/^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$/
+//    if (!emailRegex.test(username)){
+//     return res.status(400).json({ error: 'Enter your Email ID in correct format. Example: abc@xyz.com' })
+//    }
+//     // Validation for ID
+//   if (req.body.id){
+//     return res.status(400).json({ error: 'Invalid request body for user object: ID cannot be provided by the user' })
+//   }
 
-  //All four fields should be present
-  if (!username ||
-    !password ||
-    !first_name ||
-    !last_name)
-    {
-      return res.status(400).json({ error: 'username, password, first_name, last_name fields are required in the request body' })
-    }
+//   //All four fields should be present
+//   if (!username ||
+//     !password ||
+//     !first_name ||
+//     !last_name)
+//     {
+//       return res.status(400).json({ error: 'username, password, first_name, last_name fields are required in the request body' })
+//     }
   
-    const getUser = await User.findOne({
-      where: {
-          username: username,
-      },
-  }).catch((err) => {
-    return res.status(500).json({ error: 'Some error occurred while creating the user' })
-  })
-  if (getUser) {
-    return res.status(400).json({ error: 'User already exists!,Please try a different email address' })
-  }
-  else{
-    const salt = await bcrypt.genSalt(10);
-    const securedPassword = await bcrypt.hash(password, salt)
-    const user = await User.create({first_name, username, last_name,password:securedPassword})
-    const userWithoutPassword = {
-      id:user.id,
-      first_name: user.first_name,
-      username: user.username,
-      last_name: user.last_name,
-      account_updated: user.account_updated,
-      account_created: user.account_created
-      };
+//     const getUser = await User.findOne({
+//       where: {
+//           username: username,
+//       },
+//   }).catch((err) => {
+//     return res.status(500).json({ error: 'Some error occurred while creating the user' })
+//   })
+//   if (getUser) {
+//     return res.status(400).json({ error: 'User already exists!,Please try a different email address' })
+//   }
+//   else{
+//     const salt = await bcrypt.genSalt(10);
+//     const securedPassword = await bcrypt.hash(password, salt)
+//     const user = await User.create({first_name, username, last_name,password:securedPassword})
+//     const userWithoutPassword = {
+//       id:user.id,
+//       first_name: user.first_name,
+//       username: user.username,
+//       last_name: user.last_name,
+//       account_updated: user.account_updated,
+//       account_created: user.account_created
+//       };
       
-      res.status(201).json(userWithoutPassword);
-}
-  } catch (err) {
-    console.log(err)
+//       res.status(201).json(userWithoutPassword);
+// }
+//   } catch (err) {
+//     console.log(err)
     return res.status(500).json({ error: 'Some error occurred while creating the user' })
   }
 })
@@ -371,11 +371,11 @@ app.delete('/v1/product/:id', auth, async (req, res) => {
 
 
 //Listening 
-app.listen({ port: 8000 }, async () => {
-  console.log('Server up on http://localhost:8000')
-  await sequelize.authenticate()
-  console.log('Database Connected!')
-  await sequelize.sync({alter:true});
+// app.listen({ port: 8000 }, async () => {
+//   console.log('Server up on http://localhost:8000')
+//   await sequelize.authenticate()
+//   console.log('Database Connected!')
+//   await sequelize.sync({alter:true});
   
 })
 
