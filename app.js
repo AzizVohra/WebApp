@@ -1,9 +1,9 @@
 const { sequelize,User,Product} = require('./models')
-const express = require('express')
-const app = express()
-app.use(express.json())
-const bcrypt = require('bcrypt');
-const auth=require('./auth/auth')
+// const express = require('express')
+// const app = express()
+// app.use(express.json())
+// const bcrypt = require('bcrypt');
+// const auth=require('./auth/auth')
 
 app.get('/healthz', async (req, res) => {
   res.sendStatus(200);
